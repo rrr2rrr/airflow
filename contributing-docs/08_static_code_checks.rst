@@ -146,6 +146,8 @@ require Breeze Docker image to be built locally.
 +-----------------------------------------------------------+--------------------------------------------------------------+---------+
 | check-cncf-k8s-only-for-executors                         | Check cncf.kubernetes imports used for executors only        |         |
 +-----------------------------------------------------------+--------------------------------------------------------------+---------+
+| check-compat-cache-on-methods                             | Check that compat cache do not use on class methods          |         |
++-----------------------------------------------------------+--------------------------------------------------------------+---------+
 | check-core-deprecation-classes                            | Verify usage of Airflow deprecation classes in core          |         |
 +-----------------------------------------------------------+--------------------------------------------------------------+---------+
 | check-daysago-import-from-utils                           | Make sure days_ago is imported from airflow.utils.dates      |         |
@@ -221,6 +223,8 @@ require Breeze Docker image to be built locally.
 | check-system-tests-present                                | Check if system tests have required segments of code         |         |
 +-----------------------------------------------------------+--------------------------------------------------------------+---------+
 | check-system-tests-tocs                                   | Check that system tests is properly added                    |         |
++-----------------------------------------------------------+--------------------------------------------------------------+---------+
+| check-template-context-variable-in-sync                   | Check all template context variable references are in sync   |         |
 +-----------------------------------------------------------+--------------------------------------------------------------+---------+
 | check-tests-in-the-right-folders                          | Check if tests are in the right folders                      |         |
 +-----------------------------------------------------------+--------------------------------------------------------------+---------+
@@ -354,6 +358,8 @@ require Breeze Docker image to be built locally.
 | update-local-yml-file                                     | Update mounts in the local yml file                          |         |
 +-----------------------------------------------------------+--------------------------------------------------------------+---------+
 | update-migration-references                               | Update migration ref doc                                     | *       |
++-----------------------------------------------------------+--------------------------------------------------------------+---------+
+| update-openapi-spec-tags-to-be-sorted                     | Sort alphabetically openapi spec tags                        |         |
 +-----------------------------------------------------------+--------------------------------------------------------------+---------+
 | update-providers-dependencies                             | Update dependencies for provider packages                    |         |
 +-----------------------------------------------------------+--------------------------------------------------------------+---------+

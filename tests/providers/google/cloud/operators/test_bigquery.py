@@ -543,9 +543,24 @@ class TestBigQueryOperator:
             api_resource_configs=None,
             cluster_fields=None,
             encryption_configuration=encryption_configuration,
+            impersonation_chain=["service-account@myproject.iam.gserviceaccount.com"],
+            impersonation_scopes=[
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/drive",
+            ],
         )
 
         operator.execute(MagicMock())
+        mock_hook.assert_called_with(
+            gcp_conn_id="google_cloud_default",
+            use_legacy_sql=True,
+            location=None,
+            impersonation_chain=["service-account@myproject.iam.gserviceaccount.com"],
+            impersonation_scopes=[
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/drive",
+            ],
+        )
         mock_hook.return_value.run_query.assert_called_once_with(
             sql="Select * from test_table",
             destination_dataset_table=None,
@@ -714,7 +729,7 @@ class TestBigQueryOperator:
             sql="SELECT * FROM test_table",
         )
         serialized_dag = dag_maker.get_serialized_data()
-        assert "sql" in serialized_dag["dag"]["tasks"][0]
+        assert "sql" in serialized_dag["dag"]["tasks"][0]["__var"]
 
         dag = SerializedDAG.from_dict(serialized_dag)
         simple_task = dag.task_dict[TASK_ID]
@@ -725,7 +740,7 @@ class TestBigQueryOperator:
         #########################################################
 
         # Check Serialized version of operator link
-        assert serialized_dag["dag"]["tasks"][0]["_operator_extra_links"] == [
+        assert serialized_dag["dag"]["tasks"][0]["__var"]["_operator_extra_links"] == [
             {"airflow.providers.google.cloud.operators.bigquery.BigQueryConsoleLink": {}}
         ]
 
@@ -751,7 +766,7 @@ class TestBigQueryOperator:
             sql=["SELECT * FROM test_table", "SELECT * FROM test_table2"],
         )
         serialized_dag = dag_maker.get_serialized_data()
-        assert "sql" in serialized_dag["dag"]["tasks"][0]
+        assert "sql" in serialized_dag["dag"]["tasks"][0]["__var"]
 
         dag = SerializedDAG.from_dict(serialized_dag)
         simple_task = dag.task_dict[TASK_ID]
@@ -762,7 +777,7 @@ class TestBigQueryOperator:
         #########################################################
 
         # Check Serialized version of operator link
-        assert serialized_dag["dag"]["tasks"][0]["_operator_extra_links"] == [
+        assert serialized_dag["dag"]["tasks"][0]["__var"]["_operator_extra_links"] == [
             {"airflow.providers.google.cloud.operators.bigquery.BigQueryConsoleIndexableLink": {"index": 0}},
             {"airflow.providers.google.cloud.operators.bigquery.BigQueryConsoleIndexableLink": {"index": 1}},
         ]
@@ -1700,7 +1715,7 @@ class TestBigQueryInsertJobOperator:
             operator.execute(MagicMock())
         lineage = operator.get_openlineage_facets_on_complete(None)
 
-        assert lineage.run_facets == {"bigQuery_error": BigQueryErrorRunFacet(clientError=mock.ANY)}
+        assert lineage.run_facets["bigQuery_error"] == BigQueryErrorRunFacet(clientError=mock.ANY)
 
     @pytest.mark.db_test
     @mock.patch("airflow.providers.google.cloud.operators.bigquery.BigQueryHook")

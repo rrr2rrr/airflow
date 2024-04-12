@@ -39,7 +39,7 @@ Variable                                    Type                  Description
 ``{{ data_interval_start }}``               `pendulum.DateTime`_  Start of the data interval. Added in version 2.2.
 ``{{ data_interval_end }}``                 `pendulum.DateTime`_  End of the data interval. Added in version 2.2.
 ``{{ logical_date }}``                      `pendulum.DateTime`_  | A date-time that logically identifies the current DAG run. This value does not contain any semantics, but is simply a value for identification.
-                                                                  | Use ``data_interval_start`` and ``date_interval_end`` instead if you want a value that has real-world semantics,
+                                                                  | Use ``data_interval_start`` and ``data_interval_end`` instead if you want a value that has real-world semantics,
                                                                   | such as to get a slice of rows from the database based on timestamps.
 ``{{ ds }}``                                str                   | The DAG run's logical date as ``YYYY-MM-DD``.
                                                                   | Same as ``{{ logical_date | ds }}``.
@@ -74,6 +74,8 @@ Variable                                    Type                  Description
 ``{{ var.value }}``                                               Airflow variables. See `Airflow Variables in Templates`_ below.
 ``{{ var.json }}``                                                Airflow variables. See `Airflow Variables in Templates`_ below.
 ``{{ conn }}``                                                    Airflow connections. See `Airflow Connections in Templates`_ below.
+``{{ dataset_events }}``                    dict[str, ...]        | Accessors to attach information to dataset events that will be emitted by the current task.
+                                                                  | See :doc:`Datasets <authoring-and-scheduling/datasets>`. Added in version 2.10.
 ``{{ task_instance_key_str }}``             str                   | A unique, human-readable key to the task instance. The format is
                                                                   | ``{dag_id}__{task_id}__{ds_nodash}``.
 ``{{ conf }}``                              AirflowConfigParser   | The full configuration object representing the content of your

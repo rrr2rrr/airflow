@@ -22,9 +22,10 @@ description: |
   Amazon integration (including `Amazon Web Services (AWS) <https://aws.amazon.com/>`__).
 
 state: ready
-source-date-epoch: 1709554658
+source-date-epoch: 1712664326
 # note that those versions are maintained by release manager - do not update them manually
 versions:
+  - 8.20.0
   - 8.19.0
   - 8.18.0
   - 8.17.0
@@ -141,6 +142,12 @@ integrations:
     how-to-guide:
       - /docs/apache-airflow-providers-amazon/operators/athena/athena_boto.rst
       - /docs/apache-airflow-providers-amazon/operators/athena/athena_sql.rst
+    tags: [aws]
+  - integration-name: Amazon Bedrock
+    external-doc-url: https://aws.amazon.com/bedrock/
+    logo: /integration-logos/aws/Amazon-Bedrock_light-bg@4x.png
+    how-to-guide:
+      - /docs/apache-airflow-providers-amazon/operators/bedrock.rst
     tags: [aws]
   - integration-name: Amazon Chime
     external-doc-url: https://aws.amazon.com/chime/
@@ -363,6 +370,9 @@ operators:
   - integration-name: AWS Batch
     python-modules:
       - airflow.providers.amazon.aws.operators.batch
+  - integration-name: Amazon Bedrock
+    python-modules:
+      - airflow.providers.amazon.aws.operators.bedrock
   - integration-name: Amazon CloudFormation
     python-modules:
       - airflow.providers.amazon.aws.operators.cloud_formation
@@ -445,6 +455,9 @@ sensors:
   - integration-name: AWS Batch
     python-modules:
       - airflow.providers.amazon.aws.sensors.batch
+  - integration-name: Amazon Bedrock
+    python-modules:
+      - airflow.providers.amazon.aws.sensors.bedrock
   - integration-name: Amazon CloudFormation
     python-modules:
       - airflow.providers.amazon.aws.sensors.cloud_formation
@@ -514,6 +527,9 @@ hooks:
     python-modules:
       - airflow.providers.amazon.aws.hooks.athena
       - airflow.providers.amazon.aws.hooks.athena_sql
+  - integration-name: Amazon Bedrock
+    python-modules:
+      - airflow.providers.amazon.aws.hooks.bedrock
   - integration-name: Amazon Chime
     python-modules:
       - airflow.providers.amazon.aws.hooks.chime
@@ -638,6 +654,9 @@ triggers:
   - integration-name: AWS Batch
     python-modules:
       - airflow.providers.amazon.aws.triggers.batch
+  - integration-name: Amazon Bedrock
+    python-modules:
+      - airflow.providers.amazon.aws.triggers.bedrock
   - integration-name: Amazon EC2
     python-modules:
       - airflow.providers.amazon.aws.triggers.ec2
